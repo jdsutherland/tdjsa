@@ -19,5 +19,13 @@ describe('util tests', function() {
 
     expect(celcius).to.eql(0);
   });
+
+  it('should pass if f2c returns 10C for 50F', () => {
+    const farenheit = 50;
+
+    const celcius = util.f2c(farenheit);
+
+    expect(celcius).to.eql(10);
+  });
 });
 
