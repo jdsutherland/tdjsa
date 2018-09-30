@@ -8,3 +8,10 @@ const createURL = function(latitude, longitude) {
 const setLocation = function(window, url) {
   window.location = url;
 };
+
+const locate = function() {
+  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+};
+
+const onSuccess = function() {};
+const onError = function() {};

@@ -8,3 +8,18 @@ describe('set-location test', function() {
     expect(windowStub.location).to.eql(url);
   });
 });
+
+describe('locate-test', () => {
+  it('should register handlers with getCurrentPosition', (done) => {
+    const original = navigator.geolocation.getCurrentPosition;
+
+    navigator.geolocation.getCurrentPosition = function(success, error) {
+      expect(success).to.eql(onSuccess);
+      expect(error).to.eql(onError);
+      done();
+    }
+
+    locate();
+    navigator.geolocation.getCurrentPosition = original;
+  });
+});
