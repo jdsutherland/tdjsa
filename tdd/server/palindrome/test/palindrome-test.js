@@ -30,5 +30,11 @@ describe('palindrome-test', function() {
     expect(isPalindrome('')).to.be.false;
   });
 
+  it('should throw exception on missing argument', () => {
+    const call = function() { isPalindrome(); };
+
+    expect(call).to.throw(Error, /invalid/i);
+  });
+
 });
 
