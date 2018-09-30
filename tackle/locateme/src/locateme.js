@@ -4,3 +4,7 @@ const createURL = function(latitude, longitude) {
   }
   return '';
 };
+
+const setLocation = function(window, url) {
+  window.location = url;
+};
