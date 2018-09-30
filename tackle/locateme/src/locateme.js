@@ -14,4 +14,7 @@ const locate = function() {
 };
 
 const onSuccess = function() {};
-const onError = function() {};
+
+const onError = function(error) {
+  document.getElementById('error').innerHTML = error.message;
+};
