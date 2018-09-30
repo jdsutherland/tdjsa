@@ -25,5 +25,10 @@ describe('palindrome-test', function() {
   it('should return false for argument mom dad', () => {
     expect(isPalindrome('mom dad')).to.be.false;
   });
+
+  it('should return false for an empty string', () => {
+    expect(isPalindrome('')).to.be.false;
+  });
+
 });
 
