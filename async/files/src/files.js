@@ -5,10 +5,10 @@ var linesCount = function(fileName, callback, onError) {
     if(err) {
       onError('unable to open file ' + fileName);
     } else {
-      callback(data.toString().split('\n').length);      
+      callback(data.toString().split('\n').length);
     }
   };
-  
+
   fs.readFile(fileName, processFile);
 };
 
