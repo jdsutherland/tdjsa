@@ -1,2 +1,2 @@
-var locate = function() {  
+const locate = function() {
 };
