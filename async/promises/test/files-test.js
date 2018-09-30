@@ -11,5 +11,14 @@ describe('test promises', function() {
     linesCount('src/files.js')
       .then(checkCount);
   });
+
+  it('should return correct lines count - using return', () => {
+    const checkCount = function(count) {
+      expect(count).to.eql(16);
+    }
+
+    return linesCount('src/files.js')
+      .then(checkCount);
+  });
 });
 
