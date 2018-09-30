@@ -10,4 +10,13 @@ describe('test server-side callback', function() {
 
     linesCount('src/files.js', callback);
   });
+
+  it('should report an error for invalid filename', (done) => {
+    const onError = function(error) {
+      expect(error).to.eql('unable to open file src/NOPE.js');
+      done();
+    };
+
+    linesCount('src/NOPE.js', undefined, onError);
+  });
 });
