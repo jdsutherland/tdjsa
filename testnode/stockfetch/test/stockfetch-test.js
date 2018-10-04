@@ -112,7 +112,7 @@ describe('Stockfetch tests', function() {
     expect(stockfetch.tickersCount).to.eql(3);
   });
 
-  it('getPrice should call get on http with valid URL', () => {
+  it('getPrice should call get on http with valid URL', (done) => {
     const httpStub = sandbox.stub(stockfetch.http, 'get', function(url) {
       expect(url).to.eql('http://ichart.finance.yahoo.com/table.csv?s=GOOG');
       done();
