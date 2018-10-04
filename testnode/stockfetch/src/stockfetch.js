@@ -25,7 +25,16 @@ const Stockfetch = function() {
 
     return tickers.split('\n').filter(isCorrectFormat);
   };
-  this.processTickers = function(){};
+
+  this.processTickers = tickers => {
+    this.tickersCount = tickers.length;
+    tickers.forEach(ticker => this.getPrice(ticker));
+  };
+
+  this.getPrice = ticker => {
+  }
+
+  this.tickersCount = 0;
 };
 
 module.exports = Stockfetch;
