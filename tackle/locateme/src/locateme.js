@@ -1,11 +1,11 @@
-const createURL = function(latitude, longitude) {
+window.createURL = function(latitude, longitude) {
   if (latitude && longitude) {
     return `http://maps.google.com?q=${latitude},${longitude}`;
   }
   return '';
 };
 
-const setLocation = function(window, url) {
+window.setLocation = function(window, url) {
   window.location = url;
 };
 
@@ -17,9 +17,9 @@ const onSuccess = function(position) {
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
 
-  const url = createURL(latitude, longitude);
+  const url = window.createURL(latitude, longitude);
 
-  setLocation(window, url);
+  window.setLocation(window, url);
 };
 
 const onError = function(error) {
