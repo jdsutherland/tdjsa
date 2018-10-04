@@ -38,8 +38,19 @@ const Stockfetch = function() {
       .on('error', this.processHttpError.bind(this, symbol))
   }
 
-  this.processResponse = function() {};
+  this.processResponse = (symbol, response) => {
+    if (response.statusCode === 200) {
+      let data = '';
+      response.on('data', chunk => { data += chunk; });
+      response.on('end', () => { this.parsePrice(symbol, data); });
+    } else {
+      this.processError(symbol, response.statusCode);
+    }
+  };
+
   this.processHttpError = function() {};
+  this.parsePrice = function() {};
+  this.processError = function() {};
 
   this.tickersCount = 0;
 
