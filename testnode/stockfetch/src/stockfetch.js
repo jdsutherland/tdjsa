@@ -59,12 +59,24 @@ const Stockfetch = function() {
   }
 
   this.printReport = () => {
+    // TODO: printing
+    if (this.tickersCount === Object.keys(this.prices).length +
+      Object.keys(this.errors).length) {
+      this.reportCallback(this.sortData(this.prices), this.sortData(this.errors));
+    }
   };
 
   this.processError = (ticker, error) => {
     this.errors[ticker] = error;
     this.printReport();
   };
+
+  this.sortData = (data) => {
+    const toArray = (key) => { return [key, data[key]]; }
+    return Object.keys(data).sort().map(toArray);
+  }
+
+  this.reportCallback = () => {};
 
   this.tickersCount = 0;
 
