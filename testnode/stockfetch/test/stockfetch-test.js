@@ -35,7 +35,7 @@ describe('Stockfetch tests', function() {
 
   it('read should invoke processTickers for valid file', (done) => {
     const rawData = 'GOOG\nAAPL\nORCL\nMSFT';
-    const parsedData = ['GOOG, AAPL, ORCL, MSFT'];
+    const parsedData = ['GOOG', 'AAPL', 'ORCL', 'MSFT'];
 
     sandbox.stub(stockfetch, 'parseTickers')
       .withArgs(rawData).returns(parsedData);
@@ -50,6 +50,42 @@ describe('Stockfetch tests', function() {
     });
 
     stockfetch.readTickersFile('tickers.txt');
+  });
+
+  it('read should return error if given file is empty', (done) => {
+    const onError = function(err) {
+      expect(err).to.eql('File tickers.txt has invalid content');
+      done();
+    };
+
+    sandbox.stub(stockfetch, 'parseTickers').withArgs('').returns([]);
+
+    sandbox.stub(fs, 'readFile', function(fileName, callback) {
+      callback(null, '');
+    });
+
+    stockfetch.readTickersFile('tickers.txt', onError);
+  });
+
+  it('parseTickers should return tickers', () => {
+    const rawData = 'GOOG\nAAPL\nORCL\nMSFT';
+    const parsedData = ['GOOG', 'AAPL', 'ORCL', 'MSFT'];
+
+    expect(stockfetch.parseTickers(rawData)).to.eql(parsedData);
+  });
+
+  it('parseTickers should return an empty array for empty content', () => {
+    const rawData = '';
+    const parsedData = [];
+
+    expect(stockfetch.parseTickers(rawData)).to.eql(parsedData);
+  });
+
+  it('parseTickers should return an empty array for white-space', () => {
+    const rawData = ' ';
+    const parsedData = [];
+
+    expect(stockfetch.parseTickers(rawData)).to.eql(parsedData);
   });
 
 });
