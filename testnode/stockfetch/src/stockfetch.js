@@ -52,12 +52,25 @@ const Stockfetch = function() {
     this.processError(symbol, error.code);
   }
 
-  this.parsePrice = function() {};
-  this.processError = function() {};
+  this.parsePrice = (ticker, data) => {
+    const price = data.split('\n')[1].split(',').pop();
+    this.prices[ticker] = price;
+    this.printReport();
+  }
+
+  this.printReport = () => {
+  };
+
+  this.processError = (ticker, error) => {
+    this.errors[ticker] = error;
+    this.printReport();
+  };
 
   this.tickersCount = 0;
 
   this.http = http;
+  this.prices = {};
+  this.errors = {};
 };
 
 module.exports = Stockfetch;

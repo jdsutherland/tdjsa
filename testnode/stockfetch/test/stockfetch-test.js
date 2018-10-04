@@ -215,4 +215,34 @@ describe('Stockfetch tests', function() {
     parsePriceMock.verify();
   });
 
+  const data = "Date,Open,High,Low,Close,Volume,Adj Close\n\ 2015-09-11,619.75,625.780029,617.419983,625.77002,1360900,625.77002\n\ 2015-09-10,613.099976,624.159973,611.429993,621.349976,1900500,621.349976";
+
+  it('parsePrice should update prices', () => {
+    stockfetch.parsePrice('GOOG', data);
+
+    expect(stockfetch.prices.GOOG).to.eql('625.77002');
+  });
+
+  it('parsePrice should call printReport', () => {
+    const parsePriceMock = sandbox.mock(stockfetch).expects('printReport')
+
+    stockfetch.parsePrice('GOOG', data);
+
+    parsePriceMock.verify();
+  });
+
+  it('processErrors should update errors', () => {
+    stockfetch.processError('GOOG', '...oops...');
+
+    expect(stockfetch.errors.GOOG).to.eql('...oops...');
+  });
+
+  it('processError should call printReport', () => {
+    const parsePriceMock = sandbox.mock(stockfetch).expects('printReport')
+
+    stockfetch.processError('GOOG', '...oops...');
+
+    parsePriceMock.verify();
+  });
+
 });
