@@ -19,10 +19,11 @@ const Stockfetch = function() {
   };
 
   this.parseTickers = function(tickers) {
-    if (tickers.trim().length === 0) {
-      return [];
-    }
-    return tickers.split('\n');
+    const isCorrectFormat = function(str) {
+      return str.trim().length !== 0 && str.indexOf(' ') < 0;
+    };
+
+    return tickers.split('\n').filter(isCorrectFormat);
   };
   this.processTickers = function(){};
 };

@@ -88,4 +88,11 @@ describe('Stockfetch tests', function() {
     expect(stockfetch.parseTickers(rawData)).to.eql(parsedData);
   });
 
+  it('parseTickers should ignore unexpected format in content', () => {
+    const rawData = 'AAPL   \nBla h\nGOOG\n\n   ';
+    const parsedData = ['GOOG'];
+
+    expect(stockfetch.parseTickers(rawData)).to.eql(parsedData);
+  });
+
 });
