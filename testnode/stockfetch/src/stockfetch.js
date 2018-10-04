@@ -1,4 +1,5 @@
 const fs = require('fs');
+const http = require('http');
 
 const Stockfetch = function() {
   this.readTickersFile = function(filename, onError) {
@@ -31,10 +32,18 @@ const Stockfetch = function() {
     tickers.forEach(ticker => this.getPrice(ticker));
   };
 
-  this.getPrice = ticker => {
+  this.getPrice = symbol => {
+    const url = `http://ichart.finance.yahoo.com/table.csv?s=${symbol}`;
+    this.http.get(url, this.processResponse.bind(this, symbol))
+      .on('error', this.processHttpError.bind(this, symbol))
   }
 
+  this.processResponse = function() {};
+  this.processHttpError = function() {};
+
   this.tickersCount = 0;
+
+  this.http = http;
 };
 
 module.exports = Stockfetch;
