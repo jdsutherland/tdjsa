@@ -1,7 +1,20 @@
-class StockFetch {
-  readTickersFile(filename, onError) {
-    onError(`Error reading file: ${filename}`);
-  }
-}
+const fs = require('fs');
 
-module.exports = StockFetch;
+const Stockfetch = function() {
+  this.readTickersFile = function(filename, onError) {
+    const processResponse = (err, data) => {
+      if (err)
+        onError('Error reading file: ' + filename);
+      else {
+        const tickers = this.parseTickers(data.toString());
+        this.processTickers(tickers);
+      }
+    };
+    fs.readFile(filename, processResponse);
+  };
+
+  this.parseTickers = function(){};
+  this.processTickers = function(){};
+};
+
+module.exports = Stockfetch;
