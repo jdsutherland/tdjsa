@@ -17,9 +17,9 @@ const onSuccess = function(position) {
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
 
-  const url = window.createURL(latitude, longitude);
+  const url = createURL(latitude, longitude);
 
-  window.setLocation(window, url);
+  setLocation(window, url);
 };
 
 const onError = function(error) {
