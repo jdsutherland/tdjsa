@@ -13,7 +13,14 @@ const locate = function() {
   navigator.geolocation.getCurrentPosition(onSuccess, onError);
 };
 
-const onSuccess = function() {};
+const onSuccess = function(position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  const url = createURL(latitude, longitude);
+
+  setLocation(window, url);
+};
 
 const onError = function(error) {
   document.getElementById('error').innerHTML = error.message;
