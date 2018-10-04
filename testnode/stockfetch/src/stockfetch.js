@@ -48,7 +48,10 @@ const Stockfetch = function() {
     }
   };
 
-  this.processHttpError = function() {};
+  this.processHttpError = (symbol, error) => {
+    this.processError(symbol, error.code);
+  }
+
   this.parsePrice = function() {};
   this.processError = function() {};
 

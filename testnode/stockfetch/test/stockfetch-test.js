@@ -204,4 +204,15 @@ describe('Stockfetch tests', function() {
     parsePriceMock.verify();
   });
 
+  it('processHttpError should call processError with error details', () => {
+    const error = { code: '...error code...' };
+
+    const parsePriceMock = sandbox.mock(stockfetch)
+      .expects('processError').withArgs('GOOG', '...error code...');
+
+    stockfetch.processHttpError('GOOG', error);
+
+    parsePriceMock.verify();
+  });
+
 });
