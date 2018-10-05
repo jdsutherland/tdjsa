@@ -65,13 +65,4 @@ describe('task model tests', () => {
     task.get('666666666666', callback);
   });
 
-  it('get should return error on invalid taskId input', (done) => {
-    const callback = function(err, task) {
-      expect(err).to.be.instanceof(Error);
-      done();
-    };
-
-    task.get('NOPE', callback);
-  });
-
 });

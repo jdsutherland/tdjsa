@@ -9,11 +9,7 @@ module.exports = {
   },
 
   get: function(taskId, callback) {
-    try {
-      db.get().collection(collectionName)
-        .find({'_id': new ObjectId(taskId)}).limit(1).next(callback);
-    } catch (ex) {
-      callback(ex);
-    }
+    db.get().collection(collectionName)
+      .find({'_id': new ObjectId(taskId)}).limit(1).next(callback);
   },
 };
