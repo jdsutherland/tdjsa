@@ -123,4 +123,26 @@ describe('task model tests', () => {
     expect(task.validate).to.eql(validateTask);
   });
 
+  it('delete should send null after deleting existing task', (done) => {
+    const callback = err => {
+      expect(err).to.be.null
+      task.all((err, tasks) => {
+        expect(tasks.length).to.eql(2);
+        done();
+      });
+    };
+
+    task.delete('123412341242', callback);
+  });
+
+  it('delete should return Error if task not found', done => {
+    task.delete('666666666666',
+      expectError('unable to delete taks with id: 666666666666', done));
+  });
+
+  it('delete should return Error if task id not given', (done) => {
+    task.delete(undefined,
+      expectError('unable to delete taks with id: undefined', done));
+  });
+
 });

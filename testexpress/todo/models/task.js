@@ -30,5 +30,17 @@ module.exports = {
     }
   },
 
+  delete: function(taskId, callback) {
+    const handleDelete = (err, result) => {
+      if (result.deletedCount != 1) {
+        callback(new Error(`unable to delete taks with id: ${taskId}`))
+      }
+      callback(null);
+    };
+
+    db.get().collection(collectionName)
+      .deleteOne({'_id': new ObjectId(taskId)}, handleDelete);
+  },
+
   validate: validateTask,
 };
