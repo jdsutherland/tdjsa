@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const db = require('../../../db');
 const ObjectId = require('mongodb').ObjectId;
 const task = require('../../../models/task');
+const validateTask = require('../../../public/javascripts/common/validate-task');
 
 describe('task model tests', () => {
   let sampleTask;
@@ -90,6 +91,36 @@ describe('task model tests', () => {
     delete sampleTask._id;
 
     task.add(sampleTask, expectError('duplicate task', done));
+  });
+
+  it('add should call validate', (done) => {
+    validateCalled = false;
+    task.validate = task => {
+      expect(task).to.eql(sampleTask);
+      validateCalled = true;
+      return validateTask(task);
+    }
+
+    task.add(sampleTask, done);
+    expect(validateCalled).to.eql(true);
+
+    task.validate = validateTask;
+  });
+
+  it('add should handle validation failure', (done) => {
+    const onError = err => {
+      expect(err.message).to.eql('unable to add task');
+      done();
+    };
+    task.validate = task => { return false; };
+
+    task.add(sampleTask, onError);
+
+    task.validate = validateTask;
+  });
+
+  it('task.validate should refer to validateTask', () => {
+    expect(task.validate).to.eql(validateTask);
   });
 
 });

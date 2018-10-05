@@ -1,4 +1,5 @@
 const db = require('../db');
+const validateTask = require('../public/javascripts/common/validate-task');
 const ObjectId = require('mongodb').ObjectId;
 
 const collectionName = 'tasks';
@@ -22,6 +23,12 @@ module.exports = {
       }
     };
 
-    db.get().collection(collectionName).find(newTask).limit(1).next(found);
-  }
+    if (this.validate(newTask)) {
+      db.get().collection(collectionName).find(newTask).limit(1).next(found);
+    } else {
+      callback(new Error('unable to add task'))
+    }
+  },
+
+  validate: validateTask,
 };
