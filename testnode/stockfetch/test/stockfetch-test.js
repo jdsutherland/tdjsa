@@ -245,6 +245,34 @@ describe('Stockfetch tests', function() {
     parsePriceMock.verify();
   });
 
+  it('printReport should send price, errors once all responses arrive', () => {
+    stockfetch.prices = { 'GOOG': 12.34 };
+    stockfetch.errors = { 'AAPL': 'error' };
+    stockfetch.tickersCount = 2;
+
+    const mock = sandbox.mock(stockfetch)
+      .expects('reportCallback')
+      .withArgs([['GOOG', 12.34]], [['AAPL', 'error']]);
+
+    stockfetch.printReport();
+
+    mock.verify();
+  });
+
+  it('printReport should not send before all responses arrive', () => {
+    stockfetch.prices = { 'GOOG': 12.34 };
+    stockfetch.errors = { 'AAPL': 'error' };
+    stockfetch.tickersCount = 3;
+
+    const mock = sandbox.mock(stockfetch)
+      .expects('reportCallback')
+      .never();
+
+    stockfetch.printReport();
+
+    mock.verify();
+  });
+
   it('printReport should call sortData once for prices, once for errors', () => {
     stockfetch.prices = { 'GOOG': 12.34 };
     stockfetch.errors = { 'AAPL': 'error' };
@@ -269,4 +297,5 @@ describe('Stockfetch tests', function() {
 
     expect(result).to.eql([['AAPL', 2.1], ['GOOG', 1.2]]);
   });
+
 });

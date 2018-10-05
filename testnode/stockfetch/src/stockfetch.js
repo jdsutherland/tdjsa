@@ -60,8 +60,8 @@ const Stockfetch = function() {
 
   this.printReport = () => {
     // TODO: printing
-    if (this.tickersCount === Object.keys(this.prices).length +
-      Object.keys(this.errors).length) {
+    if (this.tickersCount ===
+      Object.keys(this.prices).length + Object.keys(this.errors).length) {
       this.reportCallback(this.sortData(this.prices), this.sortData(this.errors));
     }
   };
