@@ -65,4 +65,31 @@ describe('task model tests', () => {
     task.get('666666666666', callback);
   });
 
+  it('add should return null for valid task', (done) => {
+    const callback = err => {
+      expect(err).to.be.null
+      task.all((err, tasks) => {
+        expect(tasks[3].name).to.eql('a new task');
+        done();
+      });
+    };
+
+    task.add(sampleTask, callback);
+  });
+
+  const expectError = (message, done) => {
+    return err => {
+      expect(err.message).to.eql(message);
+      done();
+    }
+  };
+
+  it('add should return Error if task already exists', (done) => {
+    sampleTask = sampleTasks[0];
+
+    delete sampleTask._id;
+
+    task.add(sampleTask, expectError('duplicate task', done));
+  });
+
 });

@@ -12,4 +12,16 @@ module.exports = {
     db.get().collection(collectionName)
       .find({'_id': new ObjectId(taskId)}).limit(1).next(callback);
   },
+
+  add: function(newTask, callback) {
+    const found = (err, task) => {
+      if (task) {
+        callback(new Error('duplicate task'));
+      } else {
+        db.get().collection(collectionName).insertOne(newTask, callback);
+      }
+    };
+
+    db.get().collection(collectionName).find(newTask).limit(1).next(found);
+  }
 };
