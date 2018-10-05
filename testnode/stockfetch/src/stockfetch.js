@@ -78,6 +78,11 @@ const Stockfetch = function() {
 
   this.reportCallback = () => {};
 
+  this.getPriceForTickers = (filename, displayFn, errorFn) => {
+    this.reportCallback = displayFn;
+    this.readTickersFile(filename, errorFn);
+  }
+
   this.tickersCount = 0;
 
   this.http = http;

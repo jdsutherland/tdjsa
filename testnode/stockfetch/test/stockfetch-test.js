@@ -298,4 +298,31 @@ describe('Stockfetch tests', function() {
     expect(result).to.eql([['AAPL', 2.1], ['GOOG', 1.2]]);
   });
 
+  // Integration Tests
+
+  it('getPriceForTickers should report error for invalid file', (done) => {
+    const onError = function(err) {
+      expect(err).to.eql('Error reading file: InvalidFile');
+      done();
+    };
+
+    const display = function() {};
+
+    stockfetch.getPriceForTickers('InvalidFile', display, onError);
+  });
+
+  it('getPriceForTickers shoudl respond well for a valid file', (done) => {
+    const onError = sandbox.mock().never();
+    const display = (prices, errors) => {
+      // API broken, thus we expect 0 (instead of 4 prices)
+      expect(prices.length).to.eql(0);
+      expect(errors.length).to.eql(5);
+      onError.verify();
+      done();
+    };
+    this.timeout(10000);
+
+    stockfetch.getPriceForTickers('mixedTickers.txt', display, onError);
+  });
+
 });
