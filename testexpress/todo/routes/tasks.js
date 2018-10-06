@@ -9,4 +9,10 @@ router.get('/', (req, res, next) => {
   })
 });
 
+router.get('/:id', (req, res, next) => {
+  task.get(req.params.id, (err, task) => {
+    task ? res.send(task) : res.send({});
+  })
+});
+
 module.exports = router;

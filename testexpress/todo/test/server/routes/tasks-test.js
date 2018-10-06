@@ -50,4 +50,37 @@ describe('tasks routes tests', () => {
     registeredCallback(req, res);
   });
 
+  it('should register URI /:id for get', () => {
+    expect(router.get.calledWith('/:id', sandbox.match.any)).to.eql(true);
+  });
+
+  it("get /:validId handler should call model's get & return a task" , (done) => {
+    const sampleTask = {name: 'a new task', month: 12, day: 10, year: 2016};
+
+    sandbox.stub(task, 'get', (id, callback) => {
+      expect(id).to.eql(req.params.id);
+      callback(null, sampleTask)
+    });
+
+    const req = {params: {id: 1}};
+    const res = stubResSend(sampleTask, done);
+
+    const registeredCallback = router.get.secondCall.args[1];
+    registeredCallback(req, res);
+  });
+
+  it("get /:invalidId handler should call model's get & return {}" , (done) => {
+    const sampleTask = {};
+
+    sandbox.stub(task, 'get', (id, callback) => {
+      expect(id).to.eql(req.params.id);
+      callback(null, null)
+    });
+
+    const req = {params: {id: 2319}};
+    const res = stubResSend(sampleTask, done);
+
+    const registeredCallback = router.get.secondCall.args[1];
+    registeredCallback(req, res);
+  });
 });
