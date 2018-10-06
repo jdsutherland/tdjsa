@@ -21,4 +21,10 @@ router.post('/', (req, res, next) => {
   })
 });
 
+router.delete('/:id', (req, res, next) => {
+  task.delete(req.params.id, err => {
+    err ? res.send(err.message) : res.send("task deleted");
+  })
+});
+
 module.exports = router;

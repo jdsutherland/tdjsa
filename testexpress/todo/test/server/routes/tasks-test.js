@@ -117,4 +117,34 @@ describe('tasks routes tests', () => {
     const registeredCallback = router.post.firstCall.args[1];
     registeredCallback(req, res);
   });
+
+  it('should register URI / for delete', () => {
+    expect(router.delete.calledWith('/:id', sandbox.match.any)).to.eql(true);
+  });
+
+  it("delete :validId handler should call model's delete & return success message" , (done) => {
+    sandbox.stub(task, 'delete', (id, callback) => {
+      expect(id).to.eql(req.params.id);
+      callback(null)
+    });
+
+    const req = { params: {id: 1}};
+    const res = stubResSend("task deleted", done);
+
+    const registeredCallback = router.delete.firstCall.args[1];
+    registeredCallback(req, res);
+  });
+
+  it("delete :invalidId handler should return error message" , (done) => {
+    sandbox.stub(task, 'delete', (id, callback) => {
+      expect(id).to.eql(req.params.id);
+      callback(new Error('unable to delete taks with id: 666'))
+    });
+
+    const req = { params: {id: 666}};
+    const res = stubResSend('unable to delete taks with id: 666', done);
+
+    const registeredCallback = router.delete.firstCall.args[1];
+    registeredCallback(req, res);
+  });
 });
