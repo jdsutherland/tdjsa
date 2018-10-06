@@ -15,4 +15,10 @@ router.get('/:id', (req, res, next) => {
   })
 });
 
+router.post('/', (req, res, next) => {
+  task.add(req.body, err => {
+    err ? res.send(err.message) : res.send("task added");
+  })
+});
+
 module.exports = router;

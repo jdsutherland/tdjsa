@@ -83,4 +83,38 @@ describe('tasks routes tests', () => {
     const registeredCallback = router.get.secondCall.args[1];
     registeredCallback(req, res);
   });
+
+  it('should register URI / for post', () => {
+    expect(router.post.calledWith('/', sandbox.match.any)).to.eql(true);
+  });
+
+  it("post handler should call model's add & return success message" , (done) => {
+    const sampleTask = {name: 'a new task', month: 12, day: 10, year: 2016};
+
+    sandbox.stub(task, 'add', (newTask, callback) => {
+      expect(newTask).to.eql(sampleTask);
+      callback(null, sampleTask)
+    });
+
+    const req = { body: sampleTask };
+    const res = stubResSend("task added", done);
+
+    const registeredCallback = router.post.firstCall.args[1];
+    registeredCallback(req, res);
+  });
+
+  it("post handler should return error message on failure" , (done) => {
+    const sampleTask = {};
+
+    sandbox.stub(task, 'add', (newTask, callback) => {
+      expect(newTask).to.eql(sampleTask);
+      callback(new Error('unable to add task'));
+    });
+
+    const req = { body: sampleTask };
+    const res = stubResSend('unable to add task', done);
+
+    const registeredCallback = router.post.firstCall.args[1];
+    registeredCallback(req, res);
+  });
 });
