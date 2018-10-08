@@ -32,6 +32,7 @@ var updateTasks = (status, response) => {
 
 var initpage = () => {
 	getTasks();
+	document.getElementById('submit').onclick = addTask;
 }
 
 var addTask = () => {
@@ -43,15 +44,24 @@ var addTask = () => {
 		year: aDate.getFullYear()
 	};
 
-	callService({
-		method: 'POST',
-		url: '/tasks',
-		contentType: 'application/json',
-		data: JSON.stringify(newTask)
-	}, updateMessage);
+	if (validateTask(newTask)) {
+		callService({
+			method: 'POST',
+			url: '/tasks',
+			contentType: 'application/json',
+			data: JSON.stringify(newTask)
+		}, updateMessage);
+	} else {
+		updateMessage(0, 'invalid task');
+	}
+
+	return false;
 };
 
-var updateMessage = () => {
+var updateMessage = (status, response) => {
+	const message = `${response} (status: ${status})`;
+	document.getElementById('message').innerHTML = message;
+	getTasks();
 };
 
 window.onload = initpage;

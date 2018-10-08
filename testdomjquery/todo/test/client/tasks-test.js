@@ -159,4 +159,40 @@ describe('tasks-with builtin functions-tests', () => {
 
     addTask();
   });
+
+  it('addTask callback should update message', () => {
+    updateMessage(200, 'added');
+
+    expect(domElements.message.innerHTML).to.eql('added (status: 200)');
+  });
+
+  it('addTask callback should call getTasks', () => {
+    const getTasksMock = sandbox.mock(window).expects('getTasks').once();
+
+    updateMessage(200, 'task added');
+    getTasksMock.verify();
+  });
+
+  it('initpage should register add task click event', () => {
+    initpage();
+
+    expect(domElements.submit.onclick).to.eql(addTask);
+  });
+
+  it('addTask should return false', () => {
+    expect(addTask()).to.eql(false);
+  });
+
+  it('addTask for invalid task: should skip callServiceMock call updateMessage', () => {
+    const updateMessageMock = sandbox.mock(window)
+      .expects('updateMessage')
+      .withArgs(0, 'invalid task');
+    const callServiceMock = sandbox.spy(window, 'callService');
+    sandbox.stub(window, 'validateTask').returns(false);
+
+    addTask();
+
+    updateMessageMock.verify();
+    expect(callServiceMock).not.to.be.called;
+  });
 });
