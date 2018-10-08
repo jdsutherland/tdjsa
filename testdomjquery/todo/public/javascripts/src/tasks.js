@@ -28,6 +28,12 @@ var updateTasks = (status, response) => {
 	_setTableHTML(tasks);
 };
 
+var initpage = () => {
+	getTasks();
+}
+
+window.onload = initpage;
+
 function _setTableHTML(tasks) {
 	const row = (task) => {
 		return `
