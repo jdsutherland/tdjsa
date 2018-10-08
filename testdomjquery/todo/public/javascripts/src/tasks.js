@@ -28,12 +28,19 @@ var updateTasks = (status, response) => {
 	_setTableHTML(tasks);
 };
 
-var _setTableHTML = tasks => {
-	var row = (task) => {
-		return `<tr><td>${task.name}</td>
-			<td>${task.month}/${task.day}/${task.year}</td></tr>`;
+function _setTableHTML(tasks) {
+	const row = (task) => {
+		return `
+		<tr>
+			<td>${task.name}</td>
+			<td>${task.month}/${task.day}/${task.year}</td>
+	 	</tr>`;
 	}
 
-	var table = `<table>${tasks.map(row).join('')}</table>`;
+	const table = `
+		<table>
+			${tasks.map(row).join('')}
+		</table>`;
+
 	document.getElementById('tasks').innerHTML = table;
 }
