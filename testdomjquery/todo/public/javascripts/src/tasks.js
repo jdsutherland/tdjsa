@@ -2,7 +2,18 @@ var getTasks = (callback) => {
 	callService({method: 'GET', url: '/tasks' }, updateTasks)
 };
 
-var callService = () => {};
+var callService = (options, callback) => {
+	var xhr = new XMLHttpRequest();
+	xhr.open(options.method, options.url);
+
+	xhr.onreadystatechange = () => {
+		if (xhr.readyState === 4) {
+			callback(xhr.status, xhr.response);
+		}
+	}
+
+	xhr.send();
+};
 
 var updateTasks = (status, response) => {
 	if (status !== 200) {
