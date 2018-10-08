@@ -32,6 +32,26 @@ var initpage = () => {
 	getTasks();
 }
 
+var addTask = () => {
+	const aDate = new Date(document.getElementById('date').value);
+	const newTask = {
+		name: document.getElementById('name').value,
+		month: aDate.getMonth() + 1,
+		day: aDate.getDate(),
+		year: aDate.getFullYear()
+	};
+
+	callService({
+		method: 'POST',
+		url: '/tasks',
+		contentType: 'application/json',
+		data: JSON.stringify(newTask)
+	}, updateMessage);
+};
+
+var updateMessage = () => {
+};
+
 window.onload = initpage;
 
 function _setTableHTML(tasks) {

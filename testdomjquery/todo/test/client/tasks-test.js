@@ -22,6 +22,11 @@ describe('tasks-with builtin functions-tests', () => {
     xhr = sinon.useFakeXMLHttpRequest();
     xhr.requests = [];
     xhr.onCreate = req => { xhr.requests.push(req); }
+
+    domElements = {
+      name: {value: 'a new task'},
+      date: {value: '12/11/2016'},
+    };
   });
 
   afterEach(function() {
@@ -121,5 +126,20 @@ describe('tasks-with builtin functions-tests', () => {
     sandbox.stub(window, 'getTasks', done);
 
     initpage();
+  });
+
+  it('addTask should call callService', (done) => {
+    sandbox.stub(window, 'callService', (params, callback) => {
+      expect(params.method).to.eql('POST');
+      expect(params.url).to.eql('/tasks');
+      expect(params.contentType).to.eql('application/json');
+
+      const newTask = '{"name":"a new task","month":12,"day":11,"year":2016}';
+      expect(params.data).to.eql(newTask);
+      expect(callback).to.eql(updateMessage);
+      done();
+    });
+
+    addTask();
   });
 });
