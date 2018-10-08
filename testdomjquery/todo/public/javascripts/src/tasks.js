@@ -12,7 +12,9 @@ var callService = (options, callback) => {
 		}
 	}
 
-	xhr.send();
+	xhr.setRequestHeader('Content-Type', options.contentType);
+
+	xhr.send(options.data);
 };
 
 var updateTasks = (status, response) => {

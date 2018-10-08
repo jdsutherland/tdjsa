@@ -118,6 +118,23 @@ describe('tasks-with builtin functions-tests', () => {
     expect(callback.callCount).to.eql(0);
   });
 
+  it('callService should send data to the service', () => {
+    callService({method: 'POST', url: '/tasks', data: '..some data..'});
+  });
+
+  it('callService should have default content-type', () => {
+    callService({method: 'POST', url: '/tasks', data: '..some data..'});
+
+    expect(xhr.requests[0].requestHeaders['Content-Type']).contains('text/plain');
+  });
+
+  it('callService should set  content-type if present', () => {
+    callService({method: 'POST', url: '/tasks', data: '..some data..',
+      contentType: 'whatever'});
+
+    expect(xhr.requests[0].requestHeaders['Content-Type']).contains('whatever');
+  });
+
   it('should register initpage handler with window onload', () => {
     expect(window.onload).to.eql(initpage);
   });
