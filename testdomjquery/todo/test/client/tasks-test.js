@@ -34,25 +34,23 @@ describe('tasks-with builtin functions-tests', () => {
     xhr.restore();
   });
 
-  describe('getTasks', () => {
-    it('getTasks should call callService', (done) => {
-      sandbox.stub(window, 'callService', (params) => {
-        expect(params.method).to.eql('GET');
-        expect(params.url).to.eql('/tasks');
-        done();
-      })
+  it('getTasks should call callService', (done) => {
+    sandbox.stub(window, 'callService', (params) => {
+      expect(params.method).to.eql('GET');
+      expect(params.url).to.eql('/tasks');
+      done();
+    })
 
-      getTasks();
-    });
+    getTasks();
+  });
 
-    it('getTasks should register the updateTasks with callService', function() {
-      const callServiceMock = sinon.mock(window)
-        .expects('callService')
-        .withArgs(sinon.match.any, updateTasks)
+  it('getTasks should register the updateTasks with callService', function() {
+    const callServiceMock = sandbox.mock(window)
+      .expects('callService')
+      .withArgs(sinon.match.any, updateTasks)
 
-      getTasks();
-      callServiceMock.verify();
-    });
+    getTasks();
+    callServiceMock.verify();
   });
 
   it('updateTasks should update message if status != 200', () => {
