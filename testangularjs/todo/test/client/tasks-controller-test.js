@@ -34,4 +34,18 @@ describe('tasks controller test', () => {
 
     controller.getTasks();
   });
+
+  it('updateTasks should update tasks', () => {
+    const tasksStub = [{sample: 1}];
+
+    controller.updateTasks(tasksStub);
+
+    expect(controller.tasks).to.eql(tasksStub);
+  });
+
+  it('updateError should update message', () => {
+    controller.updateError('Not Found', 404);
+
+    expect(controller.message).to.eql('Not Found (status: 404)');
+  });
 })
