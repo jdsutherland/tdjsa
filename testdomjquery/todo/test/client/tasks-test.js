@@ -200,9 +200,9 @@ describe('tasks-with builtin functions-tests', () => {
     const expected = `
         <td>10/11/2017</td>
         <td><A onclick="deleteTask('123412341203');">delete</A></td>`
-      .replace(/[\s]/g, '');
+      .replace(/\s/g, '');
 
-    expect(domElements.tasks.innerHTML.replace(/[\s]/g, '')).contains(expected);
+    expect(domElements.tasks.innerHTML.replace(/\s/g, '')).contains(expected);
   });
 
   it('deleteTask should call callService', (done) => {
