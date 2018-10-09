@@ -48,4 +48,57 @@ describe('tasks controller test', () => {
 
     expect(controller.message).to.eql('Not Found (status: 404)');
   });
+
+  it('sortTasks should sort based on year', () => {
+    const task1 = { name: 'task a', month: 1, day: 10, year: 2017};
+    const task2 = { name: 'task b', month: 1, day: 10, year: 2016};
+
+    const sorted = controller.sortTasks([task1, task2]);
+
+    expect(sorted).to.eql([task2, task1]);
+  });
+
+  it('sortTasks should sort on year, then month', () => {
+    const task1 = { name: 'task a', month: 2, day: 10, year: 2017};
+    const task2 = { name: 'task b', month: 1, day: 10, year: 2016};
+    const task3 = { name: 'task c', month: 1, day: 10, year: 2017};
+
+    const sorted = controller.sortTasks([task1, task2, task3]);
+
+    expect(sorted).to.eql([task2, task3, task1]);
+  });
+
+  it('sortTasks should sort on year, month, then day', () => {
+    const task1 = { name: 'task a', month: 1, day: 20, year: 2017};
+    const task2 = { name: 'task b', month: 1, day: 14, year: 2017};
+    const task3 = { name: 'task c', month: 1, day: 10, year: 2017};
+
+    const sorted = controller.sortTasks([task1, task2, task3]);
+
+    expect(sorted).to.eql([task3, task2, task1]);
+  });
+
+  it('sortTasks should sort on year, month, day, then name', () => {
+    const task1 = { name: 'task a', month: 1, day: 20, year: 2017};
+    const task2 = { name: 'task c', month: 1, day: 20, year: 2017};
+    const task3 = { name: 'task b', month: 1, day: 20, year: 2017};
+
+    const sorted = controller.sortTasks([task1, task2, task3]);
+
+    expect(sorted).to.eql([task1, task3, task2]);
+  });
+
+  it('updateTasks should call sortTasks', () => {
+    const tasksStub = [{sample: 1}];
+
+    controller.sortTasks = tasks => {
+      expect(tasks).to.eql(tasksStub);
+      return '..sorted..';
+    }
+
+    controller.updateTasks(tasksStub);
+
+    expect(controller.tasks).to.eql('..sorted..');
+  });
+
 })
