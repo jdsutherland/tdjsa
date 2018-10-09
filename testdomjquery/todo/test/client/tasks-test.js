@@ -193,4 +193,35 @@ describe('tasks-with builtin functions-tests', () => {
     updateMessageMock.verify();
     expect(callServiceMock).not.to.be.called;
   });
+
+  it('updateTasks should add link for delete', () => {
+    updateTasks(200, responseStub);
+
+    const expected = `
+        <td>10/11/2017</td>
+        <td><A onclick="deleteTask('123412341203');">delete</A></td>`
+      .replace(/[\s]/g, '');
+
+    expect(domElements.tasks.innerHTML.replace(/[\s]/g, '')).contains(expected);
+  });
+
+  it('deleteTask should call callService', (done) => {
+    sandbox.stub(window, 'callService', (params) => {
+      expect(params.method).to.eql('DELETE');
+      expect(params.url).to.eql('/tasks/123412341203');
+      done();
+    });
+
+    deleteTask('123412341203');
+  });
+
+  it('deleteTask should register updateMessage', () => {
+    const callServiceMock = sandbox.mock(window)
+      .expects('callService')
+      .withArgs(sinon.match.any, updateMessage)
+
+    deleteTask('123412341203');
+
+    callServiceMock.verify();
+  });
 });

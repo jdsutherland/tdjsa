@@ -58,6 +58,13 @@ var addTask = () => {
 	return false;
 };
 
+var deleteTask = (taskId) => {
+	callService({
+		method: 'DELETE',
+		url: `/tasks/${taskId}`,
+	}, updateMessage);
+}
+
 var updateMessage = (status, response) => {
 	const message = `${response} (status: ${status})`;
 	document.getElementById('message').innerHTML = message;
@@ -72,7 +79,8 @@ function _setTableHTML(tasks) {
 		<tr>
 			<td>${task.name}</td>
 			<td>${task.month}/${task.day}/${task.year}</td>
-	 	</tr>`;
+			<td><A onclick="deleteTask('${task._id}');">delete</A></td>
+		</tr>`;
 	}
 
 	const table = `
