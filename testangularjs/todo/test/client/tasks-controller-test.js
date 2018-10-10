@@ -130,4 +130,44 @@ describe('tasks controller test', () => {
 
     expect(controller.convertNewTaskToJSON()).to.eql(newTaskJSON);
   });
+
+  it('addTask should call the service', (done) => {
+    controller.updateMessage = () => {};
+    controller.updateError = () => {};
+
+    const convertedTask = controller.convertNewTaskToJSON(controller.newTask);
+
+    tasksServiceMock.add = (task, success, error) => {
+      expect(task).to.eql(convertedTask);
+      expect(success).to.eql(controller.updateMessage);
+      expect(error).to.eql(controller.updateError);
+      done();
+    };
+
+    controller.addTask();
+  });
+
+  it('updateMessage should update message and call getTasks', (done) => {
+    controller.getTasks = () => { done(); };
+    controller.updateMessage('good');
+
+    expect(controller.message).to.eql('good');
+  });
+
+  it('disableAddTask should make good use of validateTask', () => {
+    const newTask = { name: 'task a', date: '6/10/2016' };
+    const originalValidateTask = window.validateTask;
+    window.validateTask = task => {
+      expect(task.name).to.eql(newTask.name);
+      expect(`${task.month}/${task.day}/${task.year}`).to.eql(newTask.date);
+      return true;
+    }
+    controller.newTask = newTask;
+
+    const resultOfDisableAddTask = controller.disableAddTask();
+
+    window.validateTask = originalValidateTask;
+
+    expect(resultOfDisableAddTask).to.eql(false);
+  });
 })

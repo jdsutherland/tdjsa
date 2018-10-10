@@ -12,6 +12,22 @@ const TasksController = function(tasksService, $filter, $document) {
     controller.tasks = controller.sortTasks(tasks);
   }
 
+  controller.addTask = () => {
+    tasksService.add(
+      controller.convertNewTaskToJSON(controller.newTask),
+      controller.updateMessage,
+      controller.updateError);
+  }
+
+  controller.disableAddTask = () => {
+    return !validateTask(controller.convertNewTaskToJSON());
+  }
+
+  controller.updateMessage = message => {
+    controller.message = message;
+    controller.getTasks();
+  }
+
   controller.updateError = (error, status) => {
     controller.message = `${error} (status: ${status})`;
   }
@@ -24,7 +40,7 @@ const TasksController = function(tasksService, $filter, $document) {
   controller.newTask = {
     name: '',
     date: '',
-  };
+  }
 
   controller.convertNewTaskToJSON = () => {
     const dateParts = controller.newTask.date.split('/');
