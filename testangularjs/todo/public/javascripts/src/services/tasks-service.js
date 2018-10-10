@@ -14,6 +14,9 @@ const TasksService = function($http) {
   }
 
   service.delete = (taskId, success, error) => {
+    $http.delete(`tasks/${taskId}`)
+         .success(success)
+         .error(error);
   }
 
 };

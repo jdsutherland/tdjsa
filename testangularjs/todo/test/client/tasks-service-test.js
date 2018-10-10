@@ -67,4 +67,31 @@ describe('tasks service test', () => {
     httpBackend.flush();
   });
 
+  it('delete should call service, register success function', (done) => {
+    const sampleTaskId = '1234123412341234';
+    httpBackend.expectDELETE(`tasks/${sampleTaskId}`)
+               .respond(200, 'deleted')
+
+    const success = data => {
+      expect(data).to.eql('deleted');
+      done();
+    };
+
+    service.delete(sampleTaskId, success, notCalled);
+    httpBackend.flush();
+  });
+
+  it('delete should call service, register error function', (done) => {
+    const sampleTaskId = '1234123412341234';
+    httpBackend.expectDELETE(`tasks/${sampleTaskId}`)
+               .respond(500, 'server error')
+
+    const error = data => {
+      expect(data).to.eql('server error');
+      done();
+    };
+
+    service.delete(sampleTaskId, notCalled, error);
+    httpBackend.flush();
+  });
 });
