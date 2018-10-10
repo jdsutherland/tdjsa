@@ -8,6 +8,9 @@ const TasksService = function($http) {
   }
 
   service.add = (task, success, error) => {
+    $http.post('tasks', task)
+         .success(success)
+         .error(error);
   }
 
   service.delete = (taskId, success, error) => {

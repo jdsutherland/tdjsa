@@ -23,7 +23,6 @@ describe('tasks service test', () => {
     };
 
     service.get(success, notCalled);
-
     httpBackend.flush();
   });
 
@@ -38,7 +37,33 @@ describe('tasks service test', () => {
     };
 
     service.get(notCalled, error);
+    httpBackend.flush();
+  });
 
+  it('add should call service, register success function', (done) => {
+    httpBackend.expectPOST('tasks', newTaskJSON)
+               .respond(200, 'added')
+
+    const success = data => {
+      expect(data).to.eql('added');
+      done();
+    };
+
+    service.add(newTaskJSON, success, notCalled);
+    httpBackend.flush();
+  });
+
+  it('add should call service, register error function', (done) => {
+    httpBackend.expectPOST('tasks', newTaskJSON)
+               .respond(500, 'server error')
+
+    const error = (error, status) => {
+      expect(error).to.eql('server error');
+      expect(status).to.eql(500);
+      done();
+    };
+
+    service.add(newTaskJSON, notCalled, error);
     httpBackend.flush();
   });
 
