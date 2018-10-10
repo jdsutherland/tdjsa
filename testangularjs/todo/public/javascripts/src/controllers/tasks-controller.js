@@ -19,6 +19,11 @@ const TasksController = function(tasksService, $filter, $document) {
       controller.updateError);
   }
 
+  controller.deleteTask = taskId => {
+    tasksService.delete(
+      taskId, controller.updateMessage, controller.updateError);
+  }
+
   controller.disableAddTask = () => {
     return !validateTask(controller.convertNewTaskToJSON());
   }
