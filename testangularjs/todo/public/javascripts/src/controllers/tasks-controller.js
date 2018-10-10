@@ -61,5 +61,6 @@ const TasksController = function(tasksService, $filter, $document) {
   $document.ready(controller.getTasks);
 };
 
-angular.module('todoapp', [])
-  .controller('TasksController', ['TasksService', '$filter', '$document', TasksController]);
+angular.module('todoapp')
+       .controller('TasksController',
+         ['TasksService', '$filter', '$document', TasksController]);
