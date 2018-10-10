@@ -1,4 +1,4 @@
-const TasksController = function(tasksService, $filter) {
+const TasksController = function(tasksService, $filter, $document) {
   const controller = this;
 
   controller.tasks = [];
@@ -21,7 +21,8 @@ const TasksController = function(tasksService, $filter) {
     return orderBy(tasks, ['year', 'month', 'day', 'name']);
   }
 
+  $document.ready(controller.getTasks);
 };
 
 angular.module('todoapp', [])
-  .controller('TasksController', ['TasksService', '$filter', TasksController]);
+  .controller('TasksController', ['TasksService', '$filter', '$document', TasksController]);
