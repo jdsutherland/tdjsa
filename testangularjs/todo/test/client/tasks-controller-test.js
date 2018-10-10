@@ -108,4 +108,26 @@ describe('tasks controller test', () => {
     expect(documentReadyHandler).to.eql(controller.getTasks);
   });
 
+  it('newTask should have empty `name` and `date` on create', () => {
+    expect(controller.newTask.name).to.eql('');
+    expect(controller.newTask.date).to.eql('');
+  });
+
+  it('should convert newTask with no data to JSON', () => {
+    const newTask = controller.convertNewTaskToJSON();
+
+    expect(newTask.name).to.eql('');
+    expect(newTask.month).to.eql(NaN);
+    expect(newTask.day).to.eql(NaN);
+    expect(newTask.year).to.eql(NaN);
+  });
+
+  it('should convert newTask with data to JSON format', () => {
+    const newTask = { name: 'task a', date: '6/10/2016' };
+    const newTaskJSON = { name: 'task a', month: 6, day: 10, year: 2016 };
+
+    controller.newTask = newTask;
+
+    expect(controller.convertNewTaskToJSON()).to.eql(newTaskJSON);
+  });
 })
