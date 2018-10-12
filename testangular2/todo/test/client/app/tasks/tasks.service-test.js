@@ -69,6 +69,12 @@ describe('tasks service tests', function() {
     observableThrowMock.verify();
   });
 
+  it('should inject HTTP into constructor', () => {
+    const injectedServices =
+      Reflect.getMetadata('parameters', app.TasksService);
+
+    expect(injectedServices[0]).to.eql([ng.http.Http]);
+  });
 
 });
 

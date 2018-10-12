@@ -1,9 +1,9 @@
 (function(app) {
   app.TasksService = ng.core
     .Class({
-      constructor: function(_http) {
+      constructor: [ng.http.Http, function(_http) {
         this.http = _http;
-      },
+      }],
 
       get: function() {
         return this.http.get('/tasks')
