@@ -5,10 +5,11 @@
       templateUrl:'tasks.component.html',
     })
     .Class({
-      constructor: function(_tasksService) {
+      constructor: function(_tasksService, _sortPipe) {
         this.tasks = [];
         this.messages = '';
         this.service = _tasksService;
+        this.sortPipe = _sortPipe;
       },
       getTasks: function() {
         this.service.get()
@@ -18,7 +19,7 @@
           );
       },
       updateTasks: function(tasks) {
-        this.tasks = tasks;
+        this.tasks = this.sortPipe.transform(tasks);
       },
       updateError: function(message) {
         this.messages = message;

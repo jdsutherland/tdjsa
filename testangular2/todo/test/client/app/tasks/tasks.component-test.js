@@ -5,6 +5,7 @@ let tasksService;
 const observable = { subscribe: function() {} };
 const updateTasksBindStub = () => {};
 const updateErrorBindStub = () => {};
+const sortPipe = { transform: data => { return data; } };
 
 beforeEach(function() {
   tasksService = {
@@ -12,7 +13,7 @@ beforeEach(function() {
     add: () => {},
     delete: () => {},
   };
-  tasksComponent = new app.TasksComponent(tasksService);
+  tasksComponent = new app.TasksComponent(tasksService, sortPipe);
 
   sandbox = sinon.sandbox.create();
 
@@ -85,6 +86,19 @@ describe('tasks component tests', function() {
     tasksComponent.ngOnInit();
 
     getTasksMock.verify();
+  });
+
+  it('updateTasks should call transform on pipe', () => {
+    const tasksStub = '...fake input...'
+    const expectedSortedTasks = '...fake output...';
+
+    sandbox.stub(sortPipe, 'transform')
+      .withArgs(tasksStub)
+      .returns(expectedSortedTasks);
+
+    tasksComponent.updateTasks(tasksStub);
+
+    expect(tasksComponent.tasks).to.eql(expectedSortedTasks);
   });
 
 });
