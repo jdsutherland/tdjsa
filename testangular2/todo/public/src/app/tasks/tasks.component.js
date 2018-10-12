@@ -28,6 +28,9 @@
       updateError: function(message) {
         this.messages = message;
       },
+      updateMessage: function() {
+
+      },
       ngOnInit: function() {
         this.getTasks();
       },
@@ -39,6 +42,13 @@
           day: parseInt(dateParts[1]),
           year: parseInt(dateParts[2])
         };
+      },
+      addTask: function() {
+        this.service.add(this.convertNewTaskToJSON())
+          .subscribe(
+            this.updateMessage.bind(this),
+            this.updateError.bind(this)
+          );
       }
 
     });

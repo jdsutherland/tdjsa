@@ -6,6 +6,7 @@ describe('tasks component tests', function() {
   const observable = { subscribe: function() {} };
   const updateTasksBindStub = () => {};
   const updateErrorBindStub = () => {};
+  const updateMessageBindStub = () => {};
   const sortPipe = { transform: data => { return data; } };
 
   beforeEach(function() {
@@ -26,7 +27,10 @@ describe('tasks component tests', function() {
       .withArgs(tasksComponent)
       .returns(updateErrorBindStub);
 
-    sandbox.stub(tasksService, 'get').withArgs().returns(observable);
+    sandbox.stub(tasksComponent.updateMessage, 'bind')
+      .withArgs(tasksComponent)
+      .returns(updateMessageBindStub);
+
   });
 
   afterEach(function() {
@@ -60,6 +64,8 @@ describe('tasks component tests', function() {
     observableMock = sandbox.mock(observable)
       .expects('subscribe')
       .withArgs(updateTasksBindStub, updateErrorBindStub);
+
+    sandbox.stub(tasksService, 'get').withArgs().returns(observable);
 
     tasksComponent.getTasks();
 
@@ -141,6 +147,22 @@ describe('tasks component tests', function() {
     tasksComponent.newTask = newTask;
 
     expect(tasksComponent.convertNewTaskToJSON()).to.be.eql(newTaskJSON);
+  });
+
+  it('addTask should register handlers with service', () => {
+    const observableMock = sandbox.mock(observable)
+      .expects('subscribe')
+      .withArgs(updateMessageBindStub, updateErrorBindStub);
+
+    const tasksStub = {};
+    tasksComponent.convertNewTaskToJSON = () => { return tasksStub; }
+
+    sandbox.stub(tasksService, 'add')
+      .withArgs(tasksStub).returns(observable);
+
+    tasksComponent.addTask();
+
+    observableMock.verify();
   });
 });
 
