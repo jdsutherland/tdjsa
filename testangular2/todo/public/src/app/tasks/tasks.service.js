@@ -19,9 +19,8 @@
       },
 
       returnError: function(error) {
-        // return Rx.Observable.throw(
-        //   error.message || `error, status: ${error.status}`);
-      }
+        return Rx.Observable.throw(error.message);
+      },
 
     });
 }(window.app || (window.app = {})));

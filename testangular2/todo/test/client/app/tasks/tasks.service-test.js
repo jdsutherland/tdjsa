@@ -57,6 +57,18 @@ describe('tasks service tests', function() {
       .to.throw('Request failed with status: 404');
   });
 
+  it('returnError should return an error Observable', () => {
+    const error = {message: 'oops'};
+
+    const observableThrowMock = sandbox.mock(Rx.Observable)
+      .expects('throw')
+      .withArgs(error.message);
+
+    tasksService.returnError(error);
+
+    observableThrowMock.verify();
+  });
+
 
 });
 
