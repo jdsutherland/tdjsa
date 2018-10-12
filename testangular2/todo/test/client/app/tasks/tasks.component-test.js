@@ -57,7 +57,7 @@ describe('tasks component tests', function() {
   });
 
   it('should initialize messages to empty string', () => {
-    expect(tasksComponent.messages).to.eql('');
+    expect(tasksComponent.message).to.eql('');
   });
 
   it('getTasks should register handlers with service', () => {
@@ -84,7 +84,7 @@ describe('tasks component tests', function() {
     const messageStub = "Not Found";
     tasksComponent.updateError(messageStub);
 
-    expect(tasksComponent.messages).to.eql(messageStub);
+    expect(tasksComponent.message).to.eql(messageStub);
   });
 
   it('getTasks is called on init', () => {

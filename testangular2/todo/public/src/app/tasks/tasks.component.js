@@ -11,7 +11,7 @@
       function(_tasksService, _sortPipe) {
         this.tasks = [];
         this.newTask = {name: '', date: ''};
-        this.messages = '';
+        this.message = '';
         this.service = _tasksService;
         this.sortPipe = _sortPipe;
       }],
@@ -26,7 +26,7 @@
         this.tasks = this.sortPipe.transform(tasks);
       },
       updateError: function(message) {
-        this.messages = message;
+        this.message = message;
       },
       updateMessage: function() {
 
