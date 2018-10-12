@@ -11,7 +11,7 @@
             || task1.name.localeCompare(task2.name);
         };
 
-        return tasks.sort(compareTwoTasks);
+        return tasks.slice().sort(compareTwoTasks);
       }
     });
 }(window.app || (window.app = {})));

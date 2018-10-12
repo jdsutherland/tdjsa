@@ -51,5 +51,15 @@ describe('tasks-sort pipe tests', function() {
     expect(sorted).to.eql([task3, task4, task1, task2]);
   });
 
+  it('should not mutate input', () => {
+    const task1 = {name: 'task b', month: 1, day: 10, year: 2016};
+    const task2 = {name: 'task c', month: 1, day: 10, year: 2016};
+    const input = [task2, task1];
+
+    sortPipe.transform(input);
+
+    expect(input[0]).to.eql(task2);
+  });
+
 });
 
