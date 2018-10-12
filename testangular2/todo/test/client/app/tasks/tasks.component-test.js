@@ -120,5 +120,27 @@ describe('tasks component tests', function() {
     expect(injectedServices[1]).to.eql([app.TasksSortPipe]);
   });
 
+  it('newTask should be initialized properly', () => {
+    expect(tasksComponent.newTask.name).to.eql('');
+    expect(tasksComponent.newTask.date).to.eql('');
+  });
+
+  it('should properly convert newTask with no data to JSON', () => {
+    const newTask = tasksComponent.convertNewTaskToJSON();
+
+    expect(newTask.name).to.be.eql('');
+    expect(newTask.month).to.be.NAN;
+    expect(newTask.day).to.be.NAN;
+    expect(newTask.year).to.be.NAN;
+  });
+
+  it('should properly convert newTask with data to JSON', () => {
+    const newTask = {name: 'task a', date: '6/10/2016'};
+    const newTaskJSON = {name: 'task a', month: 6, day: 10, year: 2016};
+
+    tasksComponent.newTask = newTask;
+
+    expect(tasksComponent.convertNewTaskToJSON()).to.be.eql(newTaskJSON);
+  });
 });
 

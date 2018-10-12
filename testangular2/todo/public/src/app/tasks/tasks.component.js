@@ -10,6 +10,7 @@
       constructor: [app.TasksService, app.TasksSortPipe,
       function(_tasksService, _sortPipe) {
         this.tasks = [];
+        this.newTask = {name: '', date: ''};
         this.messages = '';
         this.service = _tasksService;
         this.sortPipe = _sortPipe;
@@ -30,6 +31,15 @@
       ngOnInit: function() {
         this.getTasks();
       },
+      convertNewTaskToJSON: function() {
+        const dateParts = this.newTask.date.split('/');
+        return {
+          name: this.newTask.name,
+          month: parseInt(dateParts[0]),
+          day: parseInt(dateParts[1]),
+          year: parseInt(dateParts[2])
+        };
+      }
 
     });
 })(window.app || (window.app = {}));
