@@ -5,6 +5,9 @@
       templateUrl:'tasks.component.html',
     })
     .Class({
-      constructor: function() {}
+      constructor: function() {
+        this.tasks = [];
+        this.messages = '';
+      }
     });
 })(window.app || (window.app = {}));
