@@ -23,6 +23,9 @@
       updateError: function(message) {
         this.messages = message;
       },
+      ngOnInit: function() {
+        this.getTasks();
+      },
 
     });
 })(window.app || (window.app = {}));

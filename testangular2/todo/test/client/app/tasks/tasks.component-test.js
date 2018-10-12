@@ -79,5 +79,13 @@ describe('tasks component tests', function() {
     expect(tasksComponent.messages).to.eql(messageStub);
   });
 
+  it('getTasks is called on init', () => {
+    const getTasksMock = sandbox.mock(tasksComponent).expects('getTasks')
+
+    tasksComponent.ngOnInit();
+
+    getTasksMock.verify();
+  });
+
 });
 
