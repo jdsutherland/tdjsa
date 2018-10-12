@@ -42,5 +42,21 @@ describe('tasks service tests', function() {
     expect(observable.map.calledWith(tasksService.extractData)).to.eql(true);
     expect(observable.catch.calledWith(tasksService.returnError)).to.eql(true);
   });
+
+  it('extractData should return result from json()', () => {
+    const fakeJSON = {};
+    const response = {status: 200, json: () => { return fakeJSON; }};
+
+    expect(tasksService.extractData(response)).to.eql(fakeJSON);
+  });
+
+  it('extractData should throw exception for invalid status', () => {
+    const response = {status: 404};
+
+    expect(() => { tasksService.extractData(response) })
+      .to.throw('Request failed with status: 404');
+  });
+
+
 });
 

@@ -12,10 +12,10 @@
       },
 
       extractData: function(response) {
-        // if (reponse.status !== 200) {
-        //   throw new Error(`error getting data, status: ${response.status}`);
-        // }
-        // return response.text();
+        if (response.status !== 200) {
+          throw new Error(`Request failed with status: ${response.status}`);
+        }
+        return response.json();
       },
 
       returnError: function(error) {
