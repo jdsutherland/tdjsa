@@ -14,6 +14,7 @@
         this.message = '';
         this.service = _tasksService;
         this.sortPipe = _sortPipe;
+        this.validateTask = validateTask;
       }],
       getTasks: function() {
         this.service.get()
@@ -28,8 +29,9 @@
       updateError: function(message) {
         this.message = message;
       },
-      updateMessage: function() {
-
+      updateMessage: function(message) {
+        this.message = message;
+        this.getTasks();
       },
       ngOnInit: function() {
         this.getTasks();
@@ -49,6 +51,9 @@
             this.updateMessage.bind(this),
             this.updateError.bind(this)
           );
+      },
+      disableAddTask: function() {
+        return !this.validateTask(this.convertNewTaskToJSON());
       }
 
     });

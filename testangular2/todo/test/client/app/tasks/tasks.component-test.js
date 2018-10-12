@@ -164,5 +164,32 @@ describe('tasks component tests', function() {
 
     observableMock.verify();
   });
+
+  it('updateMessage should update message and call getTasks', () => {
+    const messageStub = "Not Found";
+    const getTasksMock = sandbox.mock(tasksComponent).expects('getTasks')
+
+    tasksComponent.updateMessage(messageStub);
+
+    expect(tasksComponent.message).to.eql(messageStub);
+    getTasksMock.verify();
+  });
+
+  it('should set validateTask to common function', () => {
+    expect(tasksComponent.validateTask).to.eql(validateTask);
+  });
+
+  it('disableAddTask should use validateTask', () => {
+    tasksComponent.newTask = {name: 'task a', date: '6/10/2016'};
+
+    const validateTasksSpy = sinon.spy(tasksComponent, 'validateTask');
+
+    const result = tasksComponent.disableAddTask();
+
+    expect(result).to.be.false
+    expect(validateTasksSpy).to.have.been.calledWith(
+      tasksComponent.convertNewTaskToJSON()
+    );
+  });
 });
 
