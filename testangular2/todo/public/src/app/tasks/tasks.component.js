@@ -17,8 +17,12 @@
             this.updateError.bind(this)
           );
       },
-      updateTasks: function() {},
-      updateError: function() {},
+      updateTasks: function(tasks) {
+        this.tasks = tasks;
+      },
+      updateError: function(message) {
+        this.messages = message;
+      },
 
     });
 })(window.app || (window.app = {}));

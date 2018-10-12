@@ -63,5 +63,21 @@ describe('tasks component tests', function() {
 
     observableMock.verify();
   });
+
+  it('updateTasks should update tasks', () => {
+    const tasksStub = [{sample: 1}];
+
+    tasksComponent.updateTasks(tasksStub);
+
+    expect(tasksComponent.tasks).to.eql(tasksStub);
+  });
+
+  it('updateError should update tasks', () => {
+    const messageStub = "Not Found";
+    tasksComponent.updateError(messageStub);
+
+    expect(tasksComponent.messages).to.eql(messageStub);
+  });
+
 });
 
