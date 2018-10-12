@@ -1,38 +1,39 @@
-let tasksComponent;
-let sandbox;
-let tasksService;
-
-const observable = { subscribe: function() {} };
-const updateTasksBindStub = () => {};
-const updateErrorBindStub = () => {};
-const sortPipe = { transform: data => { return data; } };
-
-beforeEach(function() {
-  tasksService = {
-    get: () => {},
-    add: () => {},
-    delete: () => {},
-  };
-  tasksComponent = new app.TasksComponent(tasksService, sortPipe);
-
-  sandbox = sinon.sandbox.create();
-
-  sandbox.stub(tasksComponent.updateTasks, 'bind')
-    .withArgs(tasksComponent)
-    .returns(updateTasksBindStub);
-
-  sandbox.stub(tasksComponent.updateError, 'bind')
-    .withArgs(tasksComponent)
-    .returns(updateErrorBindStub);
-
-  sandbox.stub(tasksService, 'get').withArgs().returns(observable);
-});
-
-afterEach(function() {
-  sandbox.restore();
-});
-
 describe('tasks component tests', function() {
+  let tasksComponent;
+  let sandbox;
+  let tasksService;
+
+  const observable = { subscribe: function() {} };
+  const updateTasksBindStub = () => {};
+  const updateErrorBindStub = () => {};
+  const sortPipe = { transform: data => { return data; } };
+
+  beforeEach(function() {
+    tasksService = {
+      get: () => {},
+      add: () => {},
+      delete: () => {},
+    };
+    tasksComponent = new app.TasksComponent(tasksService, sortPipe);
+
+    sandbox = sinon.sandbox.create();
+
+    sandbox.stub(tasksComponent.updateTasks, 'bind')
+      .withArgs(tasksComponent)
+      .returns(updateTasksBindStub);
+
+    sandbox.stub(tasksComponent.updateError, 'bind')
+      .withArgs(tasksComponent)
+      .returns(updateErrorBindStub);
+
+    sandbox.stub(tasksService, 'get').withArgs().returns(observable);
+  });
+
+  afterEach(function() {
+    sandbox.restore();
+  });
+
+
   it('should set the selector attribute', () => {
     const componentAnnotations =
       Reflect.getMetadata('annotations', app.TasksComponent)[0];
