@@ -1,0 +1,7 @@
+public/javascripts/@angular
+public/javascripts/reflect-metadata
+public/javascripts/rxjs
+public/javascripts/zone.js
+coverage/
+
+*.lock

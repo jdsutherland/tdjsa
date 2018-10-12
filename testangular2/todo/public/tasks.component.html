@@ -1,0 +1,14 @@
+<body>
+  <div class="heading">TO-DO</div>
+
+  <div class="taskslist">
+    <p>Number of tasks: <span id='length'>{{ tasks.length }} </span>
+    <span id="message">{{ message }}</span>
+    <table>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.name }}</td>
+        <td>{{ task.month }}/{{ task.day }}/{{ task.year }}</td>
+      </tr>
+    </table>
+  </div>
+</body>
