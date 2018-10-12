@@ -16,12 +16,25 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
 
     files: [
-      'node_modules/angular2/bundles/angular2-polyfills.js',      
-      'node_modules/rxjs/bundles/Rx.umd.js',
-      'node_modules/angular2/bundles/angular2-all.umd.js',
-      './test/client/**/*.js',
-    ],
+      "node_modules/zone.js/dist/zone.js",
+      "node_modules/reflect-metadata/Reflect.js",
+      "node_modules/rxjs/bundles/Rx.umd.js",
+      "node_modules/@angular/core/bundles/core.umd.js",
+      "node_modules/@angular/common/bundles/common.umd.js",
+      "node_modules/@angular/compiler/bundles/compiler.umd.js",
+      "node_modules/@angular/" +
+        "platform-browser/bundles/platform-browser.umd.js",
+      "node_modules/@angular/" +
+        "platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
+      "node_modules/@angular/http/bundles/http.umd.js",
 
+      './test/client/**/*.js',
+      './public/src/app/tasks/tasks-sort.pipe.js',
+      './public/src/app/tasks/tasks.service.js',
+      './public/src/app/tasks/tasks.component.js',
+      './public/src/main.js',
+      './public/javascripts/common/validate-task.js'
+    ],
     // list of files to exclude
     exclude: [
     ],
