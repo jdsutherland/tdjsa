@@ -116,7 +116,7 @@ describe('tasks component tests', function() {
     const injectedServices =
       Reflect.getMetadata('parameters', app.TasksComponent);
 
-    expect(injectedServices[0]).to.eql([app.TaskService]);
+    expect(injectedServices[0]).to.eql([app.TasksService]);
     expect(injectedServices[1]).to.eql([app.TasksSortPipe]);
   });
 
