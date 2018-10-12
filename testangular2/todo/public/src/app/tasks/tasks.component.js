@@ -3,14 +3,17 @@
     .Component({
       selector: 'tasks-list',
       templateUrl:'tasks.component.html',
+      providers: [ng.http.HTTP_PROVIDERS, app.TasksService, app.TasksSortPipe],
+
     })
     .Class({
-      constructor: function(_tasksService, _sortPipe) {
+      constructor: [app.TasksService, app.TasksSortPipe,
+      function(_tasksService, _sortPipe) {
         this.tasks = [];
         this.messages = '';
         this.service = _tasksService;
         this.sortPipe = _sortPipe;
-      },
+      }],
       getTasks: function() {
         this.service.get()
           .subscribe(

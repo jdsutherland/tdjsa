@@ -101,5 +101,23 @@ describe('tasks component tests', function() {
     expect(tasksComponent.tasks).to.eql(expectedSortedTasks);
   });
 
+  it('should verify the necessary providers', () => {
+    const componentAnnotations =
+      Reflect.getMetadata('annotations', app.TasksComponent)[0];
+
+    const expectedProviders =
+      [ng.http.HTTP_PROVIDERS, app.TasksService, app.TasksSortPipe];
+
+    expect(componentAnnotations.providers).to.eql(expectedProviders);
+  });
+
+  it('TasksService should be injected into the component', () => {
+    const injectedServices =
+      Reflect.getMetadata('parameters', app.TasksComponent);
+
+    expect(injectedServices[0]).to.eql([app.TaskService]);
+    expect(injectedServices[1]).to.eql([app.TasksSortPipe]);
+  });
+
 });
 
