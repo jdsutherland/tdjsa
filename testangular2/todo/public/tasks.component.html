@@ -1,7 +1,17 @@
 <body>
   <div class="heading">TO-DO</div>
 
-  <div class="taskslist">
+  <div id="newtask">
+    <div>Create a new task</div>
+    <label>Name</label>
+    <input type="text" id="name" [(ngModel)]="newTask.name"/>
+    <label>Date</label>
+    <input type="text" id="date" [(ngModel)]="newTask.date"/>
+    <input type="submit" id="submit" (click)="addTask();"
+                         [disabled]="disableAddTask()" value="create"/>
+  </div>
+
+  <div id="taskslist">
     <p>Number of tasks: <span id='length'>{{ tasks.length }} </span>
     <span id="message">{{ message }}</span>
     <table>

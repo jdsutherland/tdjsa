@@ -10,6 +10,7 @@ describe('tasks service tests', function() {
     http = {
       get: function() {},
       add: function() {},
+      post: function() {},
       delete: function() {},
     };
 
@@ -74,6 +75,28 @@ describe('tasks service tests', function() {
       Reflect.getMetadata('parameters', app.TasksService);
 
     expect(injectedServices[0]).to.eql([ng.http.Http]);
+  });
+
+  it('should pass task to /tasks using POST', () => {
+    const taskStub = {name: 'foo', month: 1, day: 1, year: 2017};
+
+    const options =
+      {headers: new ng.http.Headers({'Content-Type': 'application/json'})};
+
+    sandbox.stub(http, 'post')
+      .withArgs('/tasks', JSON.stringify(taskStub), options)
+      .returns(observable);
+
+    expect(tasksService.add(taskStub)).to.eql(observable);
+    expect(observable.map.calledWith(tasksService.extractData)).to.eql(true);
+    expect(observable.catch.calledWith(tasksService.returnError)).to.eql(true);
+  });
+
+  it('extractData should return text if not json()', () => {
+    const fakeBody = 'body';
+    const response = { status: 200, text: () => { return fakeBody; } };
+
+    expect(tasksService.extractData(response)).to.eql(fakeBody);
   });
 
 });

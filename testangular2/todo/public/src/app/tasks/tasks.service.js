@@ -11,11 +11,25 @@
                    .catch(this.returnError);
       },
 
+      add: function(task) {
+        const options =
+          {headers: new ng.http.Headers({'Content-Type': 'application/json'})};
+
+        return this.http.post('/tasks', JSON.stringify(task), options)
+                   .map(this.extractData)
+                   .catch(this.returnError);
+      },
+
       extractData: function(response) {
         if (response.status !== 200) {
           throw new Error(`Request failed with status: ${response.status}`);
         }
-        return response.json();
+
+        try {
+          return response.json();
+        } catch (e) {
+          return response.text();
+        }
       },
 
       returnError: function(error) {
