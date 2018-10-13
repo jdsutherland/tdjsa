@@ -9,7 +9,6 @@ describe('tasks service tests', function() {
 
     http = {
       get: function() {},
-      add: function() {},
       post: function() {},
       delete: function() {},
     };
@@ -97,6 +96,18 @@ describe('tasks service tests', function() {
     const response = { status: 200, text: () => { return fakeBody; } };
 
     expect(tasksService.extractData(response)).to.eql(fakeBody);
+  });
+
+  it('should pass task to /tasks using DELETE', () => {
+    const sampleTaskId = '1234123412341234';
+
+    sandbox.stub(http, 'delete')
+      .withArgs(`/tasks/${sampleTaskId}`)
+      .returns(observable);
+
+    expect(tasksService.delete(sampleTaskId)).to.eql(observable);
+    expect(observable.map.calledWith(tasksService.extractData)).to.eql(true);
+    expect(observable.catch.calledWith(tasksService.returnError)).to.eql(true);
   });
 
 });

@@ -18,6 +18,9 @@
       <tr *ngFor="let task of tasks">
         <td>{{ task.name }}</td>
         <td>{{ task.month }}/{{ task.day }}/{{ task.year }}</td>
+        <td>
+         <A (click)="deleteTask(task._id);">delete</A>
+        </td>
       </tr>
     </table>
   </div>

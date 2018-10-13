@@ -20,6 +20,12 @@
                    .catch(this.returnError);
       },
 
+      delete: function(taskId) {
+        return this.http.delete(`/tasks/${taskId}`)
+                   .map(this.extractData)
+                   .catch(this.returnError);
+      },
+
       extractData: function(response) {
         if (response.status !== 200) {
           throw new Error(`Request failed with status: ${response.status}`);

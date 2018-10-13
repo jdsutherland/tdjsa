@@ -61,7 +61,7 @@ describe('tasks component tests', function() {
   });
 
   it('getTasks should register handlers with service', () => {
-    observableMock = sandbox.mock(observable)
+    const observableMock = sandbox.mock(observable)
       .expects('subscribe')
       .withArgs(updateTasksBindStub, updateErrorBindStub);
 
@@ -190,6 +190,21 @@ describe('tasks component tests', function() {
     expect(validateTasksSpy).to.have.been.calledWith(
       tasksComponent.convertNewTaskToJSON()
     );
+  });
+
+  it('deleteTask should register handlers with service', () => {
+    const sampleTaskId = '1234123412341234';
+    const observableMock = sandbox.mock(observable)
+      .expects('subscribe')
+      .withArgs(updateMessageBindStub, updateErrorBindStub);
+
+    sandbox.stub(tasksService, 'delete')
+      .withArgs(sampleTaskId)
+      .returns(observable);
+
+    tasksComponent.deleteTask(sampleTaskId);
+
+    observableMock.verify();
   });
 });
 
